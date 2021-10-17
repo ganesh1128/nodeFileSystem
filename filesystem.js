@@ -1,13 +1,11 @@
-var fs = require("fs");
-var createStream = fs.createWriteStream("guvi.txt");
-createStream.end();
-
-var writeStream = fs.createWriteStream("guvi.txt");
-writeStream.write("Hi,This is Ganesh Kumar,");
-writeStream.write("from GUVI ");
-writeStream.write("Thank You");
-writeStream.end();
-fs.stat("/nodeFileSystem/guvi.txt", function(err, stats){
-    var mtime = stats.mtime;
-    console.log(mtime);
-});
+var http = require("http")
+const fs = require("fs");
+// const { Http2ServerRequest } = require("http2");
+http.createServer((req,res)=>{
+    let date = new Date();
+    fs.writeFileSync("currentDateTime.txt",`${date}`)
+    const data = fs.readFileSync("currentDateTime.txt")
+    res.write(data);
+    res.end();
+}).listen(3000)
+console.log("listening to port 3000");
